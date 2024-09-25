@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: postgres
+    volumes:
+      - ./db/:/var/lib/postgresql/data
+    environment: 
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: pindurapp
+
+

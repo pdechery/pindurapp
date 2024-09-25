@@ -1,0 +1,24 @@
+Query normal
+
+SELECT
+	C.NAME as CNAME,
+	SUM(B.BILL) as BILL
+FROM
+	CLIENT C
+	JOIN BILLS B ON C.ID = B.CLIENT_ID
+	JOIN BAR ON BAR.ID = B.BAR_ID
+GROUP BY CNAME ORDER BY BILL DESC;
+
+Query ORM SQL Alchemy
+
+db.select(Client.name, Bills.bill, Bar.name).join(Client.bars).join(Bills.bars)
+
+Print Query ORM SQL Alchemy
+
+SELECT 
+	client.name, 
+	bills.bill, 
+	bar.name AS name_1 
+FROM client 
+	JOIN bills ON client.id = bills.client_id 
+	JOIN bar ON bar.id = bills.bar_id
