@@ -10,6 +10,15 @@ db = SQLAlchemy(app)
 from app.views import views
 app.register_blueprint(views)
 
+@app.cli.command("gcp")
+def gcp():
+  from app.helpers.gcp import view_users
+  view_users()
+
+@app.cli.command("create-db")
+def create_db():
+  db.create_all()
+
 @app.cli.command("seed")
 def seed():
   from app.helpers.command import seed_db
@@ -19,5 +28,4 @@ def seed():
 def home():
     return render_template("index.html")
 
-# with app.app_context():
-#     db.create_all()
+
