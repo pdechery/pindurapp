@@ -1,3 +1,11 @@
+## Run Flask app
+flask --app app run
+
+## DB Commands
+
+flask create-db
+flask seed
+
 ## Postgres Helper
 
 ### Connect to container's psql

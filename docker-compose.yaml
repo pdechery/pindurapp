@@ -2,7 +2,7 @@ services:
   postgres:
     image: postgres
     volumes:
-      - ./db/:/var/lib/postgresql/data
+      - ./db/:/var/lib/postgresql/18/docker 
     environment: 
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: pindurapp
