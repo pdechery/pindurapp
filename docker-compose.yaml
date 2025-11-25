@@ -1,8 +1,10 @@
 services:
+  app:
+    image: pindurapp
   postgres:
     image: postgres
     volumes:
-      - ./db/:/var/lib/postgresql/18/docker 
+      - ./db/:/var/lib/postgresql/data 
     environment: 
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: pindurapp

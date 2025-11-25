@@ -11,6 +11,13 @@ flask seed
 ### Connect to container's psql
 docker exec -it pindurapp-postgres-1 psql -U postgres
 
+### Other useful commands
+
+docker run -it pindurapp bash
+docker exec pindurapp-app-1 flask create-db
+docker exec pindurapp-app-1 flask seed
+curl -i http://172.18.0.3:5000/api/clients
+
 ## Flask Helper
 
 ### Applications as Packages

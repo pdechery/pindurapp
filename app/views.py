@@ -15,10 +15,6 @@ from app.helpers.jwt import generate_jwt, verify_jwt, token
 
 views = Blueprint('views', __name__, url_prefix='/api')
 
-@views.errorhandler(404)
-def page_not_found(error):
-  return "Not Found", 404
-
 
 @views.route('/get-token')
 def get_token():
@@ -30,9 +26,13 @@ def get_token():
   return token
 
     
-@views.route("/clients/")
+@views.route("/clients")
 @views.route("/")
 def clients_list():
+  '''
+  @todo: tratamento de erro empty response
+  @todo: todos erros em JSON, não HTML
+  '''
   clients = db.session.scalars(db.select(Client).order_by(Client.name))
   res = []
   for c in clients:

@@ -1,5 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.exceptions import HTTPException
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_object('app.settings.DefaultSettings')
@@ -9,6 +10,10 @@ db = SQLAlchemy(app)
 
 from app.views import views
 app.register_blueprint(views)
+
+@app.errorhandler(HTTPException)
+def handle_bad_request(e):
+    return jsonify(error=str(e)), e.code
 
 @app.cli.command("gcp")
 def gcp():

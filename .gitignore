@@ -1,3 +1,16 @@
-venv
+# DB container
 db
+
+# Python
+venv/
+*.pyc
 __pycache__
+
+# env data
+.env
+
+# Terraform
+terraform/.terraform/
+terraform/.terraform.lock.*
+*.tfstate*
+
