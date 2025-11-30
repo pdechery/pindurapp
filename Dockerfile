@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.11
 
 WORKDIR /app
 
@@ -21,12 +21,12 @@ ENV PYTHONUNBUFFERED="true" \
   USER="python"
 
 COPY --chown=python:python requirements.txt .
-COPY --chown=python:python app app
 COPY --chown=python:python instance instance
+COPY --chown=python:python pindurapp pindurapp
+
 
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-EXPOSE 5000
+EXPOSE 8000
 
-# Set the command to run the Flask application
-CMD [ "python3", "-m" , "flask", "--app", "app", "run", "--host=0.0.0.0"]
+CMD gunicorn -w 2 pindurapp:app --bind 0.0.0.0

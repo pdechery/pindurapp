@@ -9,9 +9,9 @@ from flask import (
 from flask.json import jsonify
 
 
-from app import db
-from app.models import Client, Bar, Bills
-from app.helpers.jwt import generate_jwt, verify_jwt, token
+from pindurapp import db
+from pindurapp.models import Client, Bar, Bills
+from pindurapp.helpers.jwt import generate_jwt, verify_jwt, token
 
 views = Blueprint('views', __name__, url_prefix='/api')
 

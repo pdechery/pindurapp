@@ -1,5 +1,5 @@
-from app import db
-from app.models import Client, Bar, Bills
+from pindurapp import db
+from pindurapp.models import Client, Bar, Bills
 
 def seed_db():
   db.session.execute(db.insert(Client),[

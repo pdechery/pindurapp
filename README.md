@@ -8,6 +8,9 @@ flask seed
 
 ## Postgres Helper
 
+## Docker run
+docker run -v ./db:/var/lib/postgresql/data --env-file .env postgres
+
 ### Connect to container's psql
 docker exec -it pindurapp-postgres-1 psql -U postgres
 
@@ -35,6 +38,7 @@ https://flask-sqlalchemy.palletsprojects.com/en/2.x/api/
 
 ### Class-based Views
 https://flask.palletsprojects.com/en/3.0.x/views/
+https://flask.palletsprojects.com/en/stable/views/
 
 ### JWT com Python
 https://pypi.org/project/python-jose/

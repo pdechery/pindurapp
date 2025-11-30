@@ -3,12 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.exceptions import HTTPException
 
 app = Flask(__name__, instance_relative_config=True)
-app.config.from_object('app.settings.DefaultSettings')
+app.config.from_object('pindurapp.settings.DefaultSettings')
 app.config.from_pyfile('instance_settings.py')
 
 db = SQLAlchemy(app)
 
-from app.views import views
+from pindurapp.views import views
 app.register_blueprint(views)
 
 @app.errorhandler(HTTPException)

@@ -4,7 +4,7 @@ from sqlalchemy import ForeignKey, String,Table, Column
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app import db
+from pindurapp import db
 
 
 class Bills(db.Model):
