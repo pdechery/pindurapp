@@ -36,6 +36,9 @@ https://flask-sqlalchemy.readthedocs.io/en/3.1.x/contexts/
 ### Inicialização do SQL Alchemy no Flask
 https://flask-sqlalchemy.palletsprojects.com/en/2.x/api/
 
+### Relationship no SQL Alchemy
+https://docs.sqlalchemy.org/en/20/tutorial/orm_related_objects.html#tutorial-orm-related-objects
+
 ### Class-based Views
 https://flask.palletsprojects.com/en/3.0.x/views/
 https://flask.palletsprojects.com/en/stable/views/

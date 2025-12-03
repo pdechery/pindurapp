@@ -1,7 +1,6 @@
 from typing import List, Optional
 
-from sqlalchemy import ForeignKey, String,Table, Column
-from sqlalchemy import create_engine
+from sqlalchemy import ForeignKey, String, Table, Column
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from pindurapp import db

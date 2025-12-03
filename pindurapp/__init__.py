@@ -8,8 +8,10 @@ app.config.from_pyfile('instance_settings.py')
 
 db = SQLAlchemy(app)
 
-from pindurapp.views import views
-app.register_blueprint(views)
+from pindurapp.views.clients import client_views
+from pindurapp.views.bars import bar_views
+app.register_blueprint(client_views)
+app.register_blueprint(bar_views)
 
 @app.errorhandler(HTTPException)
 def handle_bad_request(e):
@@ -17,7 +19,7 @@ def handle_bad_request(e):
 
 @app.cli.command("gcp")
 def gcp():
-  from app.helpers.gcp import view_users
+  from pindurapp.helpers.gcp import view_users
   view_users()
 
 @app.cli.command("create-db")
@@ -26,7 +28,7 @@ def create_db():
 
 @app.cli.command("seed")
 def seed():
-  from app.helpers.command import seed_db
+  from pindurapp.helpers.command import seed_db
   seed_db()
 
 @app.route("/")
