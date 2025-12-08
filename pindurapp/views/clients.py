@@ -2,14 +2,15 @@ from sqlalchemy.sql.expression import func
 
 from flask import (
   Blueprint,
-  abort
+  abort,
+  request
 )
 from flask.json import jsonify
 from flask.views import MethodView
 
 
 from pindurapp import db
-from pindurapp.models import Client, Bills
+from pindurapp.models import Client, Bar, Bills
 
 client_views = Blueprint('client_views', __name__, url_prefix='/api')
 
@@ -49,7 +50,32 @@ class ClientAPI(MethodView):
       abort(404)
 
   def post(self):
-    return "This is Client POST function"
+    client = Client()
+    data = request.json
+    if not data["name"]:
+      abort(404, description="Client name is required")
+    client.name = data["name"]
+    if data["bills"]:
+      for bill in data["bills"]:
+        bar = db.get_or_404(Bar, bill["bar"], description="Bar id didn't found any bar on db.")
+        bill = Bills(bill=bill["bill"])
+        bill.bar_id = bar.id
+        client.bars.append(bill)
+    db.session.add(client)
+    db.session.commit()
+    return "Client added succesfully"
+  
+  def patch(self, id):
+    client = db.get_or_404(Client, id)
+    data = request.json
+    for bill in data["bills"]:
+        bar = db.get_or_404(Bar, bill["bar"], description="Bar id didn't found any bar on db.")
+        bill = Bills(bill=bill["bill"])
+        bill.bar_id = bar.id
+        client.bars.append(bill)
+    db.session.add(client)
+    db.session.commit()
+    return "The Bills were added succesfully"
 
 
 client_views.add_url_rule('/clients', 'clients_endpoint_root', view_func=ClientAPI.as_view('client_api'))
