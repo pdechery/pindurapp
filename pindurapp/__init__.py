@@ -26,6 +26,10 @@ def gcp():
 def create_db():
   db.create_all()
 
+@app.cli.command("drop-db")
+def drop_db():
+  db.drop_all()
+
 @app.cli.command("seed")
 def seed():
   from pindurapp.helpers.command import seed_db

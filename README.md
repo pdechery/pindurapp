@@ -42,6 +42,9 @@ https://docs.sqlalchemy.org/en/20/tutorial/orm_related_objects.html#tutorial-orm
 ### SQL Alchemy Association Object
 https://docs.sqlalchemy.org/en/20/orm/basic_relationships.html#association-object
 
+### SQL Alchemy Cascade
+https://docs.sqlalchemy.org/en/20/orm/cascades.html#cascade-delete-many-to-many
+
 ### Class-based Views
 https://flask.palletsprojects.com/en/3.0.x/views/
 https://flask.palletsprojects.com/en/stable/views/

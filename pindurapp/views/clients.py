@@ -61,9 +61,12 @@ class ClientAPI(MethodView):
         bill = Bills(bill=bill["bill"])
         bill.bar_id = bar.id
         client.bars.append(bill)
-    db.session.add(client)
-    db.session.commit()
-    return "Client added succesfully"
+    try:
+      db.session.add(client)
+      db.session.commit()
+      return "Client added succesfully"
+    except Exception as exp:
+      pass
   
   def patch(self, id):
     client = db.get_or_404(Client, id)
@@ -73,9 +76,22 @@ class ClientAPI(MethodView):
         bill = Bills(bill=bill["bill"])
         bill.bar_id = bar.id
         client.bars.append(bill)
-    db.session.add(client)
-    db.session.commit()
-    return "The Bills were added succesfully"
+    try:
+      db.session.add(client)
+      db.session.commit()
+      return "The Bills were added succesfully"
+    except Exception as exp:
+      pass
+
+  def delete(self, id):
+    try:
+      q = db.select(Client).filter_by(id=id)
+      r = db.session.execute(q).scalar_one()
+      db.session.delete(r)
+      db.session.commit()
+      return "The Client were removed succesfully"
+    except Exception as exp:
+      pass
 
 
 client_views.add_url_rule('/clients', 'clients_endpoint_root', view_func=ClientAPI.as_view('client_api'))

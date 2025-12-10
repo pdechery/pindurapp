@@ -1,9 +1,13 @@
+from datetime import datetime, timezone, timedelta
+
 from typing import List, Optional
 
-from sqlalchemy import ForeignKey, String, Table, Column
+from sqlalchemy import ForeignKey, String, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from pindurapp import db
+
+time_now_utc = datetime.now(timezone(timedelta(hours=-3)))
 
 
 class Bills(db.Model):
@@ -12,14 +16,17 @@ class Bills(db.Model):
     bar_id: Mapped[int] = mapped_column(ForeignKey("bar.id"), primary_key=True)
     bill: Mapped[float]
     bars: Mapped["Bar"] = relationship(back_populates="clients")
-    clients: Mapped["Client"] = relationship(back_populates="bars")
+    clients: Mapped["Client"] = relationship(back_populates="bills")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=time_now_utc)
 
 
 class Client(db.Model): 
     __tablename__ = "client"
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(30))
-    bars: Mapped[List["Bills"]] = relationship(back_populates="clients")
+    bills: Mapped[List["Bills"]] = relationship(back_populates="clients", cascade="all, delete")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=time_now_utc)
+    updated_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), onupdate=time_now_utc)
     
     def __repr__(self) -> str:
         return f"Client(id={self.id!r}, name={self.name!r})"
@@ -30,6 +37,7 @@ class Bar(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(60))
     clients: Mapped[List["Bills"]] = relationship(back_populates="bars")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=time_now_utc)
     
     def __repr__(self) -> str:
         return f"Bar(id={self.id!r}, name={self.name!r})"
