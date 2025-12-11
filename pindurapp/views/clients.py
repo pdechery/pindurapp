@@ -8,9 +8,18 @@ from flask import (
 from flask.json import jsonify
 from flask.views import MethodView
 
+from pydantic import BaseModel, PositiveInt, ValidationError
 
 from pindurapp import db
 from pindurapp.models import Client, Bar, Bills
+
+class B(BaseModel):
+  bar: int
+  bill: float 
+
+class C(BaseModel):
+  name: str
+  bills: list[B]
 
 client_views = Blueprint('client_views', __name__, url_prefix='/api')
 
@@ -24,10 +33,7 @@ def clients_sum():
   response.headers.add("Access-Control-Allow-Origin", "*")
   return response
 
-class ClientAPI(MethodView):
-  def __init__(self):
-    pass
-  
+class ClientAPI(MethodView):  
   def get(self, id: int = None):
     if not id:
       clients = db.session.execute(db.select(Client.name))
@@ -50,6 +56,11 @@ class ClientAPI(MethodView):
       abort(404)
 
   def post(self):
+    try:
+      C.model_validate_json(request.get_data())
+    except ValidationError as e:
+      abort(500, e)
+    
     client = Client()
     data = request.json
     if not data["name"]:
@@ -60,13 +71,13 @@ class ClientAPI(MethodView):
         bar = db.get_or_404(Bar, bill["bar"], description="Bar id didn't found any bar on db.")
         bill = Bills(bill=bill["bill"])
         bill.bar_id = bar.id
-        client.bars.append(bill)
+        client.bills.append(bill)
     try:
       db.session.add(client)
       db.session.commit()
       return "Client added succesfully"
     except Exception as exp:
-      pass
+      abort(500, exp)
   
   def patch(self, id):
     client = db.get_or_404(Client, id)
@@ -81,7 +92,7 @@ class ClientAPI(MethodView):
       db.session.commit()
       return "The Bills were added succesfully"
     except Exception as exp:
-      pass
+      abort(500, exp)
 
   def delete(self, id):
     try:

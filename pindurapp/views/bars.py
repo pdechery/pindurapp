@@ -5,9 +5,18 @@ from flask import (
 )
 from flask.views import MethodView
 
+from pydantic import BaseModel, ValidationError
 
 from pindurapp import db
 from pindurapp.models import Bar, Client, Bills
+
+class C(BaseModel):
+  client: int
+  bill: float 
+
+class B(BaseModel):
+  name: str
+  clients: list[C]
 
 bar_views = Blueprint('bar_views', __name__, url_prefix='/api')
 
@@ -38,9 +47,14 @@ class BarsAPI(MethodView):
           })
         return res 
     except:
-      abort(404) 
+      abort(404, description="No Bar was found.") 
 
   def post(self):
+    try:
+      B.model_validate_json(request.get_data())
+    except ValidationError as e:
+      abort(500, e)
+
     bar = Bar()
     data = request.json
     if not data["name"]:
@@ -57,7 +71,7 @@ class BarsAPI(MethodView):
       db.session.commit()
       return "Bar added succesfully"
     except Exception as exp:
-      pass
+      abort(500, exp)
   
   def patch(self, id):
     bar = db.get_or_404(Bar, id)
@@ -72,7 +86,7 @@ class BarsAPI(MethodView):
       db.session.commit()
       return "Bar updated succesfully"
     except Exception as exp:
-      pass
+      abort(500, exp)
 
   def delete(self, id):
     try:
@@ -82,7 +96,7 @@ class BarsAPI(MethodView):
       db.session.commit()
       return "The Bar were removed succesfully"
     except Exception as exp:
-      pass
+      abort(500, exp)
 
 
 bar_views.add_url_rule('/bars', 'bars_all', view_func=BarsAPI.as_view('bars_api'))
