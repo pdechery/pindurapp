@@ -21,9 +21,6 @@ class B(BaseModel):
 bar_views = Blueprint('bar_views', __name__, url_prefix='/api')
 
 class BarsAPI(MethodView):
-  def __init__(self):
-    pass
-
   def get(self, id: int = None):
     if not id:
       bars = db.session.execute(db.select(Bar).order_by(Bar.name)).scalars()

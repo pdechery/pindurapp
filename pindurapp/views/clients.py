@@ -8,7 +8,7 @@ from flask import (
 from flask.json import jsonify
 from flask.views import MethodView
 
-from pydantic import BaseModel, PositiveInt, ValidationError
+from pydantic import BaseModel, ValidationError
 
 from pindurapp import db
 from pindurapp.models import Client, Bar, Bills
