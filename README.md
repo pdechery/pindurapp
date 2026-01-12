@@ -69,3 +69,10 @@ https://stackoverflow.com/questions/13284858/how-to-share-the-global-app-object-
 https://github.com/tquach/talent-curator/blob/master/talent_curator/database.py
 https://github.com/djeada/Flask-Minimal/tree/main
 https://gist.github.com/cuibonobo/8696392
+
+### Github Actions
+
+https://docs.github.com/en/actions/get-started/understand-github-actions
+https://docs.github.com/en/actions/get-started/understand-github-actions#the-components-of-github-actions
+https://docs.github.com/en/actions/get-started/continuous-integration
+https://docs.github.com/en/actions/tutorials/build-and-test-code/python
