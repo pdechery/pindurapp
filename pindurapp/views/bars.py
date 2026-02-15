@@ -26,23 +26,23 @@ class BarsAPI(MethodView):
       bars = db.session.execute(db.select(Bar).order_by(Bar.name)).scalars()
       res = []
       for b in bars:
-        bar = {'nome': b.name, 'clients': []}
-        for c in b.clients:
-          bar['clients'].append({
-            'name':c.clients.name,
-            'bill':c.bill
+        bar = {'nome': b.name, 'bills': []}
+        for bill in b.bills:
+          bar['bills'].append({
+            'bill':bill.bill,
+            'client':bill.client.name
             })
           res.append(bar)
       return res
     try:
       bar = db.session.execute(db.select(Bar).filter_by(id=id)).scalar_one()
-      res = {'nome': bar.name, 'clients': []}
-      for c in bar.clients:
-        res['clients'].append({
-          'name':c.clients.name,
-          'bill':c.bill
+      res = {'nome': bar.name, 'bills': []}
+      for bill in bar.bills:
+        res['bills'].append({
+          'bill':bill.bill,
+          'client':bill.client.name
           })
-        return res 
+      return res
     except:
       abort(404, description="No Bar was found.") 
 
@@ -62,7 +62,7 @@ class BarsAPI(MethodView):
         client = db.get_or_404(Client, cl["client"], description="Client id didn't found any client on db.")
         bill = Bills(bill=cl["bill"])
         bill.client_id = client.id
-        bar.clients.append(bill)
+        bar.bills.append(bill)
     try:
       db.session.add(bar)
       db.session.commit()
@@ -77,7 +77,7 @@ class BarsAPI(MethodView):
       client = db.get_or_404(Client, cl["client"], description="Client id didn't found any client on db.")
       bill = Bills(bill=cl["bill"])
       bill.client_id = client.id
-      bar.clients.append(bill)
+      bar.bills.append(bill)
     try:
       db.session.add(bar)
       db.session.commit()

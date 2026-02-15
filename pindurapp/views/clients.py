@@ -24,7 +24,7 @@ class C(BaseModel):
 client_views = Blueprint('client_views', __name__, url_prefix='/api')
 
 def clients_sum():
-  q = db.select(Client.name, func.sum(Bills.bill)).join(Client.bars).join(Bills.bars).group_by(Client.name)
+  q = db.select(Client.name, func.sum(Bills.bill)).join(Client.bills).join(Bills.bar).group_by(Client.name)
   sums = db.session.execute(q)
   res = []
   for s in sums:
@@ -46,12 +46,12 @@ class ClientAPI(MethodView):
     try:
       client = db.session.execute(db.select(Client).filter_by(id=id)).scalar_one()
       res = {'nome': client.name, 'bars': []}
-      for bar in client.bars:
+      for bill in client.bills:
         res['bars'].append({
-          'name':bar.bars.name,
-          'bill':bar.bill
+          'name':bill.bar.name,
+          'bill':bill.bill
           })
-        return res
+      return res
     except:
       abort(404)
 
@@ -86,7 +86,7 @@ class ClientAPI(MethodView):
         bar = db.get_or_404(Bar, bill["bar"], description="Bar id didn't found any bar on db.")
         bill = Bills(bill=bill["bill"])
         bill.bar_id = bar.id
-        client.bars.append(bill)
+        client.bills.append(bill)
     try:
       db.session.add(client)
       db.session.commit()
