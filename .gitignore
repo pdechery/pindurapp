@@ -1,6 +1,9 @@
 # DB container
 db
 
+# Uploads
+pindurapp/static/uploads/
+
 # Python
 venv/
 *.pyc
@@ -13,4 +16,6 @@ __pycache__
 terraform/.terraform/
 terraform/.terraform.lock.*
 *.tfstate*
+
+alembic.ini
 
