@@ -1,23 +1,15 @@
 # Pindurapp
 
-Este é um app de estudo para a criação de uma API REST tendo como entidades Clientes, Bares e Contas.
+A personal side project, for studying purposes only.
 
-As tecnologias utilizadas são:
+Techstack is:
 
 - Python
 - Flask
 - SQL Alchemy
 - Pydantic
+- Alembic
 - Docker
 - Postgres
 
-O projeto usa Docker para o app em si e para o banco de dados (Postgres) e o servidor web (Nginx).
 
-Continuo desenvolvendo e adicionando outras tecnologias, tudo com finalidade de estudo.
-
-Escrevi um post no meu blog sobre o uso do SQL Alchemy neste app: [https://pdechery.github.io/mundolunar/2025/01/08/sqlalchemy.html](https://pdechery.github.io/mundolunar/2025/01/08/sqlalchemy.html)
-
-docker compose up flask postgres
-
-docker exec pindurapp-flask-1 flask --app pindurapp create-db
-docker exec pindurapp-flask-1 flask --app pindurapp seed
