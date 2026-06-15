@@ -27,6 +27,7 @@ class Client(db.Model):
     __tablename__ = "client"
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(30), unique=True)
+    picture: Mapped[str] = mapped_column(String(500))
     bills: Mapped[List["Bills"]] = relationship(back_populates="client", cascade="all, delete")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=time_now_utc)
     updated_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), onupdate=time_now_utc)
@@ -39,6 +40,7 @@ class Bar(db.Model):
     __tablename__ = "bar"
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(60), unique=True)
+    address: Mapped[str] = mapped_column(String(200))
     bills: Mapped[List["Bills"]] = relationship(back_populates="bar")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=time_now_utc)
     

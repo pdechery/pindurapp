@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.exceptions import HTTPException
@@ -10,8 +12,12 @@ db = SQLAlchemy(app)
 
 from pindurapp.views.clients import client_views
 from pindurapp.views.bars import bar_views
+from pindurapp.views.jwt import jwt_views
 app.register_blueprint(client_views)
 app.register_blueprint(bar_views)
+app.register_blueprint(jwt_views)
+
+app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static', 'uploads')
 
 @app.errorhandler(HTTPException)
 def handle_bad_request(e):

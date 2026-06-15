@@ -1,10 +1,10 @@
 ## Run Flask app
-flask --app app run
+flask --app pindurapp run
 
 ## DB Commands
 
-flask create-db
-flask seed
+flask --app pindurapp create-db
+flask --app pindurapp seed
 
 ## Postgres Helper
 
